@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html>
+	<link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	<link rel = "stylesheet" href="/stylesheets/bootstrap.css">
+	<link rel = "stylesheet" href="/stylesheets/styles.css">
+ 	<body>
+   	<div class="nav">
+      	<div class="container">
+      	<div class="row"> 
+      		<div class = "col-md-8">
+   				<a href = "/">
+ 					<h1>Integer Partitions</h1>
+ 				</a>
+ 			</div>
+			<div class="col-md-8"> 
+				<ul class="pull-left">
+         			<li><a href="/test_file2.html">Home</a></li>
+         			<li><a href="/about.html">About</a></li>
+         		</ul>
+        	</div>
+        	<div class = "col-md-5">
+        		<div id="option">
+    				<input name="updateButton" 
+                 	type="button" 
+                	value="Animate" 
+                	onclick="animatePartition()" />
+				</div>
+			</div>
+        	
+      	</div>
+      	</div>
+   	</div>
+	
+
+</html>
+<meta charset="utf-8">
+<style>
+.box{
+	
+	stroke: #ffffff;
+	stroke-width: 1;
+	
+	id : 0;
+	row : 0;
+	col : 0;
+	occu : 0;
+	id_dot : -1;
+	stage: -1;
+}
+
+.myliine{
+	stage : 0;
+	
+}
+</style>
+<body>
+
+<script type="text/javascript" src="d3.min.js"></script>
+<script src = "jquery-1.12.0.min.js"></script>
+<div id="board"></div>
+<script>
+
+
+
+var obj_arr = []
+
+function animatePartition(){
+	d3.text("order_test.txt", function(text){
+
+		//window.alert(d3.csv.parseRows(text)[0])
+		save_order_data(text)
+
+
+
+	});
+}
+function save_order_data(text){
+	var number_of_files = d3.csv.parseRows(text).length;
+	for(var index = 0; index < d3.csv.parseRows(text).length; index++){
+		//if(d3.csv.parseRows(text)[index].length > 2){
+		//		console.log(d3.csv.parseRows(text)[index])
+		//}
+		var next_array = [];
+
+		var file_object = {
+			absolute_row : 0,
+			absolute_col : 0,
+			row_num : 0,
+			max_row_length : 0,
+			name: d3.csv.parseRows(text)[index][0],
+			next: [],
+			stage: parseInt(d3.csv.parseRows(text)[index][d3.csv.parseRows(text)[index].length -1],10),
+			rows: [],
+			id_value_array: [],
+			cols: []
+			//add id values here
+		};
+
+		for(var index2 = 1; index2 < d3.csv.parseRows(text)[index].length -1; index2++){
+			next_array.push(d3.csv.parseRows(text)[index][index2])
+		}
+		file_object.next = next_array
+
+
+
+
+	//window.alert(f1.next)
+	//window.alert(object_file.name + "_test.txt")
+
+		assign_rows_cols(file_object, number_of_files)
+		
+
+	}
+}
+
+var index = 0;
+
+function assign_rows_cols(object, number_of_files){
+
+		d3.text(object.name + "_test.txt", function(text){
+		save_data(text, object)
+		obj_arr.push(object)
+		index++
+		if(index == number_of_files){
+			console.log(obj_arr)
+			geometry(obj_arr);
+
+		}
+	});
+
+
+
+}
+
+function save_data(text, object){
+	var row_count;
+	var column_count; 
+
+	x_value_array = []
+	y_value_array = []
+	id_value_array = []
+	
+	for(var index = 0; index < d3.csv.parseRows(text).length; index++){
+
+		//Get first node in file
+		var node_properties = d3.csv.parseRows(text)[index]
+
+		//Get first number in node, corresponds to x-value
+		var x_value = parseInt(node_properties[0],10)
+		x_value_array.push(x_value)
+
+		//Get second number in node, corresponds to y-value
+		var y_value = parseInt(node_properties[1],10)
+		y_value_array.push(y_value)
+
+		//Get third value in node, id value (1 = not hollow)
+		var id_value = parseInt(node_properties[2],10)
+
+		id_value_array.push(id_value)
+	}
+
+
+	object.id_value_array = id_value_array;
+	object.rows = y_value_array
+	object.cols = x_value_array; 
+	object.max_row_length = Math.max.apply(null, x_value_array)
+	object.row_num = Math.max.apply(null, y_value_array)
+}
+
+function geometry(obj_arr){
+	
+	
+	
+	function find_max_stage_num(obj_arr){
+		var max_stage_num = 0;
+		for(var i = 0; i< obj_arr.length;i++){
+			if(obj_arr[i].stage>max_stage_num){max_stage_num=obj_arr[i].stage;}
+		}
+		return max_stage_num;
+	}
+	
+	
+	
+	function check_duplicate(arr,num){
+		for(var i = 0; i<arr.length;i++){
+			if(arr[i]==num)return true;
+		}
+		return false;
+	}
+	
+	function find_index_by_name(obj_arr,name){
+		for(var i=0;i<obj_arr.length;i++){
+			if(name==obj_arr[i].name){
+				return i;
+			}
+		}
+		return -1;
+	}
+	/*
+	function parse_stage(obj_arr,max_stage_num){
+		var stage = new Array(max_stage_num);
+		for(var i = 0; i< obj_arr.length;i++){
+			var stage_num = obj_arr[i].stage;
+			stage[stage_num-1].push(i);
+		}
+		return stage;
+	}*/
+	function parse_stage(obj_arr,max_stage_num){
+		var stage = new Array(max_stage_num);
+		for(var i=0;i<stage.length;i++){stage[i]=new Array();}
+		//finding whatever partition that is stage 1 and push to the first array in the stage.
+		for(var i = 0; i< obj_arr.length;i++){
+			var stage_num = obj_arr[i].stage;
+			if(stage_num==1){
+				stage[0].push(i);
+			}
+		}
+		
+		//'.' is the separater, "," means duplicate, it will be the same partition of the previous one, negative numbers are place holder, ~x where x is the index that we are holding for
+		var current_stage_num = 1;
+		while(current_stage_num<max_stage_num){
+			for(var j = 0; j< stage[current_stage_num-1].length;j++){
+				var index = stage[current_stage_num-1][j];
+				//console.log(index);
+				//a placeholder, we check if this is right stage we are holding for, if it is check duplicate and push to the next stage array, if not push the placeholder to next stage array
+				if(index == "."||index==","){continue;}
+				if(index < 0){
+					var origin_index = ~index;
+					if(obj_arr[origin_index].stage==current_stage_num+1){
+						if(check_duplicate(stage[current_stage_num],origin_index)==false){
+							stage[current_stage_num].push(origin_index);
+							stage[current_stage_num].push(".");
+						}
+						else {
+							stage[current_stage_num].push(",");
+							stage[current_stage_num].push(".");
+						}
+					}
+					else{
+						stage[current_stage_num].push(index);
+						stage[current_stage_num].push(".");
+					}
+					
+				}
+				//index greater than zero, we iterate the next array, if the next element is indeed the next stage, we check duplicate and push to next stage, if not we create a palceholder for the stage it should be in by bitwise NOT
+				else{
+					for(var k = 0;k< (obj_arr[index]).next.length;k++){
+						var next_index = find_index_by_name(obj_arr,obj_arr[index].next[k]);
+						//indeed belongs to next stage
+						if(obj_arr[next_index].stage == current_stage_num+1){
+							if(check_duplicate(stage[current_stage_num],next_index)==false){
+								stage[current_stage_num].push(next_index);
+								
+							}
+						
+							else {
+								stage[current_stage_num].push(",");
+							}
+							
+						}
+						//when it does not belong to next stage, we push a placeholder
+						else{
+							stage[current_stage_num].push(~next_index);
+						}
+					}
+					stage[current_stage_num].push(".");
+				}
+				
+
+			
+			}
+			current_stage_num++;
+		}
+		return stage;
+	
+	
+	}
+	
+	
+	
+	
+	
+	function find_max_row_length(obj_arr){
+		var the_max_row_length = 0;
+		for(var i = 0; i< obj_arr.length;i++){
+			if(obj_arr[i].max_row_length>the_max_row_length){the_max_row_length=obj_arr[i].max_row_length;}
+		}
+		return the_max_row_length;
+	}
+	
+	function find_max_row_num(obj_arr){
+		var max_row_num = 0;
+		for(var i = 0; i< obj_arr.length;i++){
+			if(obj_arr[i].row_num>max_row_num){
+				max_row_num = obj_arr[i].row_num;
+			}
+		}
+		return max_row_num;
+	}
+
+	
+	//console.log(par_col,par_row);
+	
+	function get_max_stage_length(stage){
+		var max = 0;
+		for(var i = 0;i<stage.length;i++){
+			var count = 0;
+			for(var j = 0;j<stage[i].length;j++){
+				if(stage[i][j]!=","&&stage[i][j]!="."){count++;}
+			}
+			if(count>max){max=count;}
+		}
+		return max;
+	}
+	
+	var w = 800,
+		h = 800;
+	var topleft_x = 150;
+	var topleft_y = 250;
+	var blue = "#00008b";
+	var white = "#ffffff";
+	var red = "#dc143c";
+	var black = "#000000";
+	var draw_dur = 1000;
+	var max_stage_num,stage,fixed_arrow_box_col,par_col,par_row,max_stage_length,par_dist,rows,cols,sz,r,shrink_ratio,true_raduis,boxes,box,svg;
+	
+	function assign_value(obj_arr){
+	
+		max_stage_num = find_max_stage_num(obj_arr);
+	//an array that each element is an array with each element is the index of the obj_arr
+		stage = parse_stage(obj_arr,max_stage_num);
+		fixed_arrow_box_col = 5;
+		par_col = find_max_row_length(obj_arr);
+		par_row = find_max_row_num(obj_arr);
+		max_stage_length = get_max_stage_length(stage);
+	//console.log(max_stage_length);
+	
+		par_dist = 5;
+		rows = par_row*max_stage_length+(max_stage_length-1)*par_dist;
+		cols = par_col*max_stage_num+(max_stage_num-1)*fixed_arrow_box_col;
+	
+	//console.log(rows,cols);
+		sz = Math.floor((w/cols<h/rows? w/cols : h/rows));
+		r = sz/2;
+		shrink_ratio = 1;
+		true_raduis = r*shrink_ratio;
+
+		boxes = d3.range(0, rows * cols).map(function (d) {
+			var col = d % cols;
+			var row = (d - col) / cols;
+			return {
+				r: row,
+				c: col,
+				x: col * sz + r ,
+				y: row * sz + r 
+			};
+		});
+	
+		var rectx = function(d) { return d.x - r; };
+		var recty = function(d) { return d.y - r; };
+	
+		svg = d3.select("#board").append("svg")
+		.attr("width", w)
+		.attr("height", h);
+		
+		$("svg").css({top: topleft_y, left: topleft_x, position:'absolute'});
+	//enter the data and assign row and col to the box
+	/*
+	var box = svg.selectAll(".box")
+			    .data(boxes)
+			    .enter().append("rect")
+			    .attr("class", "box")
+				.attr("x", rectx)
+				.attr("y", recty)
+				.attr("width", sz)+
+				.attr("height", sz)
+				.attr("fill","#ffffff")
+				.attr("row",function(d){return d.r;})
+				.attr("col",function(d){return d.c;})
+				.attr("id",function(d){return d.r*cols+d.c;})
+				.attr("occu",0);
+	*/
+	
+		box = svg.selectAll(".box")
+			    .data(boxes)
+			    .enter().append("circle")
+			    .attr("class", "box")
+				.attr("cx", function(d){return d.x;})
+				.attr("cy", function(d){return d.y;})
+				.attr("r",true_raduis)			
+				.attr("fill",white)
+				.attr("row",function(d){return d.r;})
+				.attr("col",function(d){return d.c;})
+				.attr("id",function(d){return d.r*cols+d.c;})
+				.attr("occu",0);
+	
+	}
+	
+	//stage_num>=1
+	function top_left_col(stage_num){
+		return (stage_num-1)*(fixed_arrow_box_col+par_col);
+	}
+	
+	function count_par_in_stage(index){
+		var count = 0;
+		for(var i=0;i<stage[index].length;i++){
+			if(stage[index][i]!=","&&stage[index][i]!="."){count++;}
+		}
+		return count;
+	}
+	//stage_num>=1
+	function top_left_row(stage_num){
+		var index = stage_num-1;
+		var par_num = count_par_in_stage(index);
+		//console.log(par_num);
+		var row_arr = [];
+		var total_occupance = par_num*par_row+(par_num-1)*par_dist;
+		var start_position = Math.floor((rows-total_occupance)/2);
+		for(var i =0;i<par_num;i++){
+			row_arr.push(start_position+i*(par_row+par_dist));
+		}
+		return row_arr;
+	}
+	
+	
+	function update_position(){
+		for(var i = 0; i < stage.length;i++){
+			var top_left_col_num = top_left_col(i+1);
+			var top_left_row_arr = top_left_row(i+1);
+			var j = 0;
+			for (var k = 0; k< stage[i].length;k++){
+				if(stage[i][k]!=","&&stage[i][k]!="."&&stage[i][k]>=0){
+					var index = stage[i][k]
+					obj_arr[index].absolute_col = top_left_col_num;
+					obj_arr[index].absolute_row = top_left_row_arr[j];
+					j++;
+				}
+			}
+		
+		}
+		/*
+		for(var i = 0 ; i < obj_arr.length;i++){
+			console.log(obj_arr[i].absolute_row,obj_arr[i].absolute_col);
+		}*/
+	}
+	
+	
+	
+	function create_lines(){
+		var line_obj = [];
+		for(var i=1;i<stage.length;i++){
+			/*
+			var k = 0;
+			for(var j = 0;j<stage[i].length;j++){
+				var src_index = stage[i][j];
+				
+			}
+			*/
+			var start_col = top_left_col(i)+par_col;
+			var start_row_arr = top_left_row(i);
+			for(var j = 0; j < start_row_arr.length;j++){
+				start_row_arr[j]=start_row_arr[j]+Math.floor(0.5*par_row);
+			}
+			var end_col = top_left_col(i+1);
+			var end_row_arr = top_left_row(i+1);
+			for(var j = 0; j< end_row_arr.length;j++){
+				end_row_arr[j]=end_row_arr[j]+Math.floor(0.5*par_row);
+			}
+			var current_index_start = 0;
+			var current_index_end = 0;
+			var current_index_next_stage = 0;
+			for(var j = 0; j< stage[i-1].length;j++){
+				if(stage[i-1][j]==","||stage[i-1][j]=="."){continue;}
+				while(stage[i][current_index_next_stage]!="."){
+					if (stage[i][current_index_next_stage]>=0){
+						line_obj.push(svg.append("line")
+								.attr("x1",start_col*sz)
+								.attr("y1",start_row_arr[current_index_start]*sz)
+								.attr("x2",end_col*sz)
+								.attr("y2",end_row_arr[current_index_end]*sz)
+								.attr("stroke-width",2)
+								.attr("stroke",white)
+								.attr("stage",i)
+								);
+						current_index_end++;
+								
+					}
+					else if (stage[i][current_index_next_stage]==","){
+						line_obj.push(svg.append("line")
+								.attr("x1",start_col*sz)
+								.attr("y1",start_row_arr[current_index_start]*sz)
+								.attr("x2",end_col*sz)
+								.attr("y2",end_row_arr[current_index_end-1]*sz)
+								.attr("stroke-width",2)
+								.attr("stroke",white)
+								.attr("stage",i)
+								);
+						
+								
+					}
+					if (stage[i][current_index_next_stage]<0){
+						line_obj.push(svg.append("line")
+								.attr("x1",start_col*sz)
+								.attr("y1",start_row_arr[current_index_start]*sz)
+								.attr("x2",(end_col+par_col)*sz)
+								.attr("y2",(end_row_arr[current_index_end])*sz)
+								.attr("stroke-width",2)
+								.attr("stroke",white)
+								.attr("stage",i)
+								);
+						current_index_end++;
+								
+					}
+					current_index_next_stage++;
+				}
+				current_index_next_stage++;
+				current_index_start++;
+			}
+		}
+		return line_obj;
+	}
+	
+	
+	
+	
+	function draw_stage(stage_num,init_delay,color,really_draw_out){
+		if (typeof(really_draw_out)==='undefined'){really_draw_out=true;}
+		for(var i = 0; i< stage[stage_num-1].length;i++){
+			if(stage[stage_num-1][i]==","||stage[stage_num-1][i]=="."||stage[stage_num-1][i]<0){continue;}
+			var index = stage[stage_num-1][i];
+			for(var j = 0; j< obj_arr[index].rows.length;j++){
+				var re_row = obj_arr[index].rows[j];
+				var re_col = obj_arr[index].cols[j];
+				var id_dott = obj_arr[index].id_value_array[j];
+				var abs_row = obj_arr[index].absolute_row+re_row-1;
+				var abs_col = obj_arr[index].absolute_col+re_col-1;
+				var temp = svg.select("[row='"+abs_row+"'][col='"+abs_col+"']");
+				temp.attr("occu",1).attr("id_dot",id_dott).attr("stage",stage_num);
+				if(really_draw_out==true){temp.transition().duration(draw_dur).delay(init_delay).attr("fill",color);}
+			}
+		}
+		return draw_dur+init_delay;
+	}
+	
+	function draw_line(stage_num,init_delay,color){
+		svg.selectAll("[stage='"+stage_num+"']").transition().duration(draw_dur).delay(init_delay).attr("stroke",color);
+		return draw_dur+init_delay;
+	}
+	//draw_stage(1,0,red);
+	function draw_board(){
+		var delay = 0;
+		for(var i = 0; i< stage.length;i++){
+			delay = draw_stage(i+1,delay,red);
+			
+			if(i<stage.length-1){delay = draw_line(i+1,delay,black);}
+		}
+		return delay;
+	}
+	
+	function do_stuff(obj_arr){
+		assign_value(obj_arr);
+		update_position();
+		create_lines();
+		return draw_board();
+		//var temp = draw_board();
+		//console.log(temp);
+		//move_one_dot(7,7,0,20,temp);
+	}
+	//var temp = do_stuff(obj_arr);
+	
+	//function for shred
+	var transitiont_dur = 500;
+	function move_one_dot(src_row,src_col,dest_row,dest_col,init_delay){
+		var src_cx = Number(svg.select("[row='"+src_row+"'][col='"+src_col+"']").attr("cx"));
+		var src_cy = Number(svg.select("[row='"+src_row+"'][col='"+src_col+"']").attr("cy"));
+		var dest_cx = Number(svg.select("[row='"+dest_row+"'][col='"+dest_col+"']").attr("cx"));
+		var dest_cy = Number(svg.select("[row='"+dest_row+"'][col='"+dest_col+"']").attr("cy"));
+		//console.log(src_cx,src_cy,dest_cx,dest_cy);
+		var temp = svg.append("circle")
+					  .attr("cx",src_cx)
+					  .attr("cy",src_cy)
+					  .attr("fill",blue)
+					  .attr("opacity",0)
+					  .attr("stroke",white)
+					  .attr("stroke-width",1)
+					  .attr("r",true_raduis)
+					  .transition()
+					  .duration(0)
+					  .delay(init_delay)
+					  .attr("opacity",1)
+					  .each("end",function(){
+						d3.select(this).transition()
+									   .duration(transitiont_dur)
+									   //.delay(init_delay)
+									   .attr("cx",dest_cx)
+									   .attr("cy",dest_cy)
+					                   .each("end",function(){
+											d3.select(this).attr("fill",red);
+									   });
+					  });
+					  
+					  
+		return transitiont_dur+init_delay;
+	}
+	function shred(start_index,end_index_1,end_index_2,init_delay){
+		//move_one_dot(7,7,0,20,temp);
+		var end_stage = obj_arr[end_index_1].stage;
+		var start_top_left_row = obj_arr[start_index].absolute_row;
+		var start_top_left_col = obj_arr[start_index].absolute_col;
+		var max_col = obj_arr[start_index].max_row_length;
+		var col_arr = new Array(max_col+1);
+		var id_arr = new Array(max_col+1);
+		for(var i = 0 ; i < max_col+1;i++){col_arr[i]=new Array();id_arr[i]=new Array();}
+		for(var i = max_col;i>=1;i--){
+			for(var j = 0;j<obj_arr[start_index].cols.length;j++){
+				if(obj_arr[start_index].cols[j]==i){
+					col_arr[i].push(obj_arr[start_index].rows[j]);
+					id_arr[i].push(obj_arr[start_index].id_value_array[j]);
+				}
+			}
+		
+		}
+		var del = init_delay;
+		//for(var i = max_col;i>=1;i--){
+			//for(var j = 0; j < col_arr[i].length;j++){console.log(col_arr[i][j]);}}
+		
+		for(var i = max_col;i>=1;i--){
+			for(var j = 0; j < col_arr[i].length;j++){
+				var start_abs_row = start_top_left_row+col_arr[i][j]-1;
+				var start_abs_col = start_top_left_col+i-1;
+				//var start_id = Number(svg.select("[row"));
+				var dot_id = id_arr[i][j];
+				//console.log(dot_id,end_stage);
+				var end_abs_row = Number(svg.select("[id_dot='"+dot_id+"'][stage='"+end_stage+"']").attr("row"));
+				var end_abs_col = Number(svg.select("[id_dot='"+dot_id+"'][stage='"+end_stage+"']").attr("col"));
+				var temp = move_one_dot(start_abs_row,start_abs_col,end_abs_row,end_abs_col,del);
+				if(j+1==col_arr[i].length){del=temp};
+			}
+		}
+		return del;
+	}
+	
+	
+	function one_to_one(start_index,end_index,init_delay){
+		return shred(start_index,end_index,-1,init_delay);
+	}
+	
+	function merge(start_index_1,start_index_2,end_index,init_delay){
+		var start_stage = obj_arr[start_index_1].stage;
+		var end_top_left_row = obj_arr[end_index].absolute_row;
+		var end_top_left_col = obj_arr[end_index].absolute_col;
+		var max_col = obj_arr[end_index].max_row_length;
+		var col_arr = new Array(max_col+1);
+		var id_arr = new Array(max_col+1);
+		for(var i = 0 ; i < max_col+1;i++){col_arr[i]=new Array();id_arr[i]=new Array();}
+		for(var i = max_col;i>=1;i--){
+			for(var j = 0;j<obj_arr[end_index].cols.length;j++){
+				if(obj_arr[end_index].cols[j]==i){
+					col_arr[i].push(obj_arr[end_index].rows[j]);
+					id_arr[i].push(obj_arr[end_index].id_value_array[j]);
+				}
+			}
+		
+		}
+		var del = init_delay;
+		//for(var i = max_col;i>=1;i--){
+			//for(var j = 0; j < col_arr[i].length;j++){console.log(col_arr[i][j]);}}
+		
+		for(var i = max_col;i>=1;i--){
+			for(var j = 0; j < col_arr[i].length;j++){
+				var end_abs_row = end_top_left_row+col_arr[i][j]-1;
+				var end_abs_col = end_top_left_col+i-1;
+				//var start_id = Number(svg.select("[row"));
+				var dot_id = id_arr[i][j];
+				//console.log(dot_id,end_stage);
+				var start_abs_row = Number(svg.select("[id_dot='"+dot_id+"'][stage='"+start_stage+"']").attr("row"));
+				var start_abs_col = Number(svg.select("[id_dot='"+dot_id+"'][stage='"+start_stage+"']").attr("col"));
+				var temp = move_one_dot(start_abs_row,start_abs_col,end_abs_row,end_abs_col,del);
+				if(j+1==col_arr[i].length){del=temp};
+			}
+		}
+		return del;
+	}
+	
+	
+	
+	function draw_starter_stage(){
+		var delay = 0;
+		for(var i = 0; i< stage.length;i++){
+			if(i==0){delay = draw_stage(i+1,delay,red);}
+			else{draw_stage(i+1,0,white,false);}
+			
+		}
+		return delay;
+	}
+	
+	function do_stuff_2(obj_arr){
+		assign_value(obj_arr);
+		update_position();
+		create_lines();
+		return draw_starter_stage();
+	
+	}
+	function bijection(){
+		var temp = do_stuff_2(obj_arr);
+		temp = shred(stage[0][0],stage[1][0],stage[1][1],temp);
+		one_to_one(stage[1][0],stage[2][0],temp);
+		temp = one_to_one(stage[1][1],stage[2][2],temp);
+		temp = merge(stage[2][0],stage[2][2],stage[3][0],temp);
+		for(var i = 0; i< stage.length;i++){	
+			if(i<stage.length-1){temp = draw_line(i+1,temp,black);}
+		}
+		return temp;
+	}
+	
+	bijection();
+}
+
+</script>
