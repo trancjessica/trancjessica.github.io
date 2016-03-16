@@ -1,0 +1,46 @@
+VERTICES
+AG-100-35/fileU.txt 9
+AG-100-35/fileO.txt 6
+AG-100-35/fileS.txt 7
+AG-100-35/fileP.txt 6
+AG-100-35/fileR.txt 7
+AG-100-35/fileK.txt 5
+AG-100-35/fileE.txt 3
+AG-100-35/fileG.txt 4
+AG-100-35/fileB.txt 2
+AG-100-35/fileC.txt 2
+AG-100-35/fileL.txt 5
+AG-100-35/fileA.txt 1
+AG-100-35/fileT.txt 8
+AG-100-35/fileI.txt 4
+AG-100-35/fileD.txt 3
+AG-100-35/fileJ.txt 4
+AG-100-35/fileH.txt 4
+AG-100-35/fileQ.txt 6
+AG-100-35/fileF.txt 3
+AG-100-35/fileM.txt 5
+AG-100-35/fileN.txt 5
+EDGES
+AG-100-35/fileA.txt 1;AG-100-35/fileB.txt 2;
+AG-100-35/fileA.txt 1;AG-100-35/fileC.txt 2;
+AG-100-35/fileC.txt 2;AG-100-35/fileF.txt 3;
+AG-100-35/fileF.txt 3;AG-100-35/fileI.txt 4;
+AG-100-35/fileF.txt 3;AG-100-35/fileJ.txt 4;
+AG-100-35/fileI.txt 4;AG-100-35/fileM.txt 5;
+AG-100-35/fileJ.txt 4;AG-100-35/fileN.txt 5;
+AG-100-35/fileM.txt 5;AG-100-35/fileQ.txt 6;
+AG-100-35/fileN.txt 5;AG-100-35/fileQ.txt 6;
+AG-100-35/fileB.txt 2;AG-100-35/fileD.txt 3;
+AG-100-35/fileB.txt 2;AG-100-35/fileE.txt 3;
+AG-100-35/fileE.txt 3;AG-100-35/fileH.txt 4;
+AG-100-35/fileD.txt 3;AG-100-35/fileG.txt 4;
+AG-100-35/fileH.txt 4;AG-100-35/fileL.txt 5;
+AG-100-35/fileG.txt 4;AG-100-35/fileK.txt 5;
+AG-100-35/fileL.txt 5;AG-100-35/fileP.txt 6;
+AG-100-35/fileK.txt 5;AG-100-35/fileO.txt 6;
+AG-100-35/fileP.txt 6;AG-100-35/fileS.txt 7;
+AG-100-35/fileO.txt 6;AG-100-35/fileR.txt 7;
+AG-100-35/fileR.txt 7;AG-100-35/fileT.txt 8;
+AG-100-35/fileS.txt 7;AG-100-35/fileT.txt 8;
+AG-100-35/fileT.txt 8;AG-100-35/fileU.txt 9;
+AG-100-35/fileQ.txt 6;AG-100-35/fileU.txt 9;

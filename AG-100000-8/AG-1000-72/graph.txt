@@ -1,0 +1,46 @@
+VERTICES
+AG-1000-72/fileU.txt 9
+AG-1000-72/fileR.txt 7
+AG-1000-72/fileO.txt 6
+AG-1000-72/fileP.txt 6
+AG-1000-72/fileK.txt 5
+AG-1000-72/fileG.txt 4
+AG-1000-72/fileL.txt 5
+AG-1000-72/fileH.txt 4
+AG-1000-72/fileE.txt 3
+AG-1000-72/fileS.txt 7
+AG-1000-72/fileF.txt 3
+AG-1000-72/fileB.txt 2
+AG-1000-72/fileA.txt 1
+AG-1000-72/fileT.txt 8
+AG-1000-72/fileN.txt 5
+AG-1000-72/fileC.txt 2
+AG-1000-72/fileJ.txt 4
+AG-1000-72/fileQ.txt 6
+AG-1000-72/fileI.txt 4
+AG-1000-72/fileM.txt 5
+AG-1000-72/fileD.txt 3
+EDGES
+AG-1000-72/fileA.txt 1;AG-1000-72/fileB.txt 2;
+AG-1000-72/fileA.txt 1;AG-1000-72/fileC.txt 2;
+AG-1000-72/fileC.txt 2;AG-1000-72/fileF.txt 3;
+AG-1000-72/fileF.txt 3;AG-1000-72/fileI.txt 4;
+AG-1000-72/fileF.txt 3;AG-1000-72/fileJ.txt 4;
+AG-1000-72/fileI.txt 4;AG-1000-72/fileM.txt 5;
+AG-1000-72/fileJ.txt 4;AG-1000-72/fileN.txt 5;
+AG-1000-72/fileM.txt 5;AG-1000-72/fileQ.txt 6;
+AG-1000-72/fileN.txt 5;AG-1000-72/fileQ.txt 6;
+AG-1000-72/fileB.txt 2;AG-1000-72/fileD.txt 3;
+AG-1000-72/fileB.txt 2;AG-1000-72/fileE.txt 3;
+AG-1000-72/fileE.txt 3;AG-1000-72/fileH.txt 4;
+AG-1000-72/fileD.txt 3;AG-1000-72/fileG.txt 4;
+AG-1000-72/fileH.txt 4;AG-1000-72/fileL.txt 5;
+AG-1000-72/fileG.txt 4;AG-1000-72/fileK.txt 5;
+AG-1000-72/fileL.txt 5;AG-1000-72/fileP.txt 6;
+AG-1000-72/fileK.txt 5;AG-1000-72/fileO.txt 6;
+AG-1000-72/fileP.txt 6;AG-1000-72/fileS.txt 7;
+AG-1000-72/fileO.txt 6;AG-1000-72/fileR.txt 7;
+AG-1000-72/fileR.txt 7;AG-1000-72/fileT.txt 8;
+AG-1000-72/fileS.txt 7;AG-1000-72/fileT.txt 8;
+AG-1000-72/fileT.txt 8;AG-1000-72/fileU.txt 9;
+AG-1000-72/fileQ.txt 6;AG-1000-72/fileU.txt 9;

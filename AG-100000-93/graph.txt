@@ -1,0 +1,46 @@
+VERTICES
+AG-100000-93/fileR.txt 7
+AG-100000-93/fileO.txt 6
+AG-100000-93/fileP.txt 6
+AG-100000-93/fileK.txt 5
+AG-100000-93/fileL.txt 5
+AG-100000-93/fileG.txt 4
+AG-100000-93/fileJ.txt 4
+AG-100000-93/fileE.txt 3
+AG-100000-93/fileB.txt 2
+AG-100000-93/fileI.txt 4
+AG-100000-93/fileH.txt 4
+AG-100000-93/fileF.txt 3
+AG-100000-93/fileM.txt 5
+AG-100000-93/fileS.txt 7
+AG-100000-93/fileN.txt 5
+AG-100000-93/fileU.txt 9
+AG-100000-93/fileC.txt 2
+AG-100000-93/fileA.txt 1
+AG-100000-93/fileQ.txt 6
+AG-100000-93/fileT.txt 8
+AG-100000-93/fileD.txt 3
+EDGES
+AG-100000-93/fileA.txt 1;AG-100000-93/fileB.txt 2;
+AG-100000-93/fileA.txt 1;AG-100000-93/fileC.txt 2;
+AG-100000-93/fileC.txt 2;AG-100000-93/fileF.txt 3;
+AG-100000-93/fileF.txt 3;AG-100000-93/fileI.txt 4;
+AG-100000-93/fileF.txt 3;AG-100000-93/fileJ.txt 4;
+AG-100000-93/fileI.txt 4;AG-100000-93/fileM.txt 5;
+AG-100000-93/fileJ.txt 4;AG-100000-93/fileN.txt 5;
+AG-100000-93/fileM.txt 5;AG-100000-93/fileQ.txt 6;
+AG-100000-93/fileN.txt 5;AG-100000-93/fileQ.txt 6;
+AG-100000-93/fileB.txt 2;AG-100000-93/fileD.txt 3;
+AG-100000-93/fileB.txt 2;AG-100000-93/fileE.txt 3;
+AG-100000-93/fileE.txt 3;AG-100000-93/fileH.txt 4;
+AG-100000-93/fileD.txt 3;AG-100000-93/fileG.txt 4;
+AG-100000-93/fileH.txt 4;AG-100000-93/fileL.txt 5;
+AG-100000-93/fileG.txt 4;AG-100000-93/fileK.txt 5;
+AG-100000-93/fileL.txt 5;AG-100000-93/fileP.txt 6;
+AG-100000-93/fileK.txt 5;AG-100000-93/fileO.txt 6;
+AG-100000-93/fileP.txt 6;AG-100000-93/fileS.txt 7;
+AG-100000-93/fileO.txt 6;AG-100000-93/fileR.txt 7;
+AG-100000-93/fileR.txt 7;AG-100000-93/fileT.txt 8;
+AG-100000-93/fileS.txt 7;AG-100000-93/fileT.txt 8;
+AG-100000-93/fileT.txt 8;AG-100000-93/fileU.txt 9;
+AG-100000-93/fileQ.txt 6;AG-100000-93/fileU.txt 9;

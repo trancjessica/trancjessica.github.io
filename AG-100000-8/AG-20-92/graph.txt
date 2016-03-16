@@ -1,0 +1,46 @@
+VERTICES
+AG-20-92/fileU.txt 9
+AG-20-92/fileR.txt 7
+AG-20-92/fileO.txt 6
+AG-20-92/fileL.txt 5
+AG-20-92/fileP.txt 6
+AG-20-92/fileG.txt 4
+AG-20-92/fileH.txt 4
+AG-20-92/fileF.txt 3
+AG-20-92/fileN.txt 5
+AG-20-92/fileS.txt 7
+AG-20-92/fileK.txt 5
+AG-20-92/fileB.txt 2
+AG-20-92/fileT.txt 8
+AG-20-92/fileC.txt 2
+AG-20-92/fileA.txt 1
+AG-20-92/fileE.txt 3
+AG-20-92/fileJ.txt 4
+AG-20-92/fileM.txt 5
+AG-20-92/fileD.txt 3
+AG-20-92/fileI.txt 4
+AG-20-92/fileQ.txt 6
+EDGES
+AG-20-92/fileA.txt 1;AG-20-92/fileB.txt 2;
+AG-20-92/fileA.txt 1;AG-20-92/fileC.txt 2;
+AG-20-92/fileC.txt 2;AG-20-92/fileF.txt 3;
+AG-20-92/fileF.txt 3;AG-20-92/fileI.txt 4;
+AG-20-92/fileF.txt 3;AG-20-92/fileJ.txt 4;
+AG-20-92/fileI.txt 4;AG-20-92/fileM.txt 5;
+AG-20-92/fileJ.txt 4;AG-20-92/fileN.txt 5;
+AG-20-92/fileM.txt 5;AG-20-92/fileQ.txt 6;
+AG-20-92/fileN.txt 5;AG-20-92/fileQ.txt 6;
+AG-20-92/fileB.txt 2;AG-20-92/fileD.txt 3;
+AG-20-92/fileB.txt 2;AG-20-92/fileE.txt 3;
+AG-20-92/fileE.txt 3;AG-20-92/fileH.txt 4;
+AG-20-92/fileD.txt 3;AG-20-92/fileG.txt 4;
+AG-20-92/fileH.txt 4;AG-20-92/fileL.txt 5;
+AG-20-92/fileG.txt 4;AG-20-92/fileK.txt 5;
+AG-20-92/fileL.txt 5;AG-20-92/fileP.txt 6;
+AG-20-92/fileK.txt 5;AG-20-92/fileO.txt 6;
+AG-20-92/fileP.txt 6;AG-20-92/fileS.txt 7;
+AG-20-92/fileO.txt 6;AG-20-92/fileR.txt 7;
+AG-20-92/fileR.txt 7;AG-20-92/fileT.txt 8;
+AG-20-92/fileS.txt 7;AG-20-92/fileT.txt 8;
+AG-20-92/fileT.txt 8;AG-20-92/fileU.txt 9;
+AG-20-92/fileQ.txt 6;AG-20-92/fileU.txt 9;

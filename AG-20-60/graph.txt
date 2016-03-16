@@ -1,0 +1,46 @@
+VERTICES
+AG-20-60/fileS.txt 7
+AG-20-60/fileT.txt 8
+AG-20-60/fileO.txt 6
+AG-20-60/fileL.txt 5
+AG-20-60/fileU.txt 9
+AG-20-60/fileG.txt 4
+AG-20-60/fileH.txt 4
+AG-20-60/fileF.txt 3
+AG-20-60/fileR.txt 7
+AG-20-60/fileE.txt 3
+AG-20-60/fileB.txt 2
+AG-20-60/fileP.txt 6
+AG-20-60/fileJ.txt 4
+AG-20-60/fileA.txt 1
+AG-20-60/fileI.txt 4
+AG-20-60/fileK.txt 5
+AG-20-60/fileC.txt 2
+AG-20-60/fileM.txt 5
+AG-20-60/fileD.txt 3
+AG-20-60/fileN.txt 5
+AG-20-60/fileQ.txt 6
+EDGES
+AG-20-60/fileA.txt 1;AG-20-60/fileB.txt 2;
+AG-20-60/fileA.txt 1;AG-20-60/fileC.txt 2;
+AG-20-60/fileC.txt 2;AG-20-60/fileF.txt 3;
+AG-20-60/fileF.txt 3;AG-20-60/fileI.txt 4;
+AG-20-60/fileF.txt 3;AG-20-60/fileJ.txt 4;
+AG-20-60/fileI.txt 4;AG-20-60/fileM.txt 5;
+AG-20-60/fileJ.txt 4;AG-20-60/fileN.txt 5;
+AG-20-60/fileM.txt 5;AG-20-60/fileQ.txt 6;
+AG-20-60/fileN.txt 5;AG-20-60/fileQ.txt 6;
+AG-20-60/fileB.txt 2;AG-20-60/fileD.txt 3;
+AG-20-60/fileB.txt 2;AG-20-60/fileE.txt 3;
+AG-20-60/fileE.txt 3;AG-20-60/fileH.txt 4;
+AG-20-60/fileD.txt 3;AG-20-60/fileG.txt 4;
+AG-20-60/fileH.txt 4;AG-20-60/fileL.txt 5;
+AG-20-60/fileG.txt 4;AG-20-60/fileK.txt 5;
+AG-20-60/fileL.txt 5;AG-20-60/fileP.txt 6;
+AG-20-60/fileK.txt 5;AG-20-60/fileO.txt 6;
+AG-20-60/fileP.txt 6;AG-20-60/fileS.txt 7;
+AG-20-60/fileO.txt 6;AG-20-60/fileR.txt 7;
+AG-20-60/fileR.txt 7;AG-20-60/fileT.txt 8;
+AG-20-60/fileS.txt 7;AG-20-60/fileT.txt 8;
+AG-20-60/fileT.txt 8;AG-20-60/fileU.txt 9;
+AG-20-60/fileQ.txt 6;AG-20-60/fileU.txt 9;

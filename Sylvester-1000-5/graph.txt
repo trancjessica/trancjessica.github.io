@@ -1,0 +1,20 @@
+VERTICES
+Sylvester-1000-5/fileI.txt 6
+Sylvester-1000-5/fileG.txt 5
+Sylvester-1000-5/fileH.txt 4
+Sylvester-1000-5/fileF.txt 4
+Sylvester-1000-5/fileE.txt 3
+Sylvester-1000-5/fileA.txt 1
+Sylvester-1000-5/fileB.txt 2
+Sylvester-1000-5/fileC.txt 2
+Sylvester-1000-5/fileD.txt 3
+EDGES
+Sylvester-1000-5/fileA.txt 1;Sylvester-1000-5/fileC.txt 2;
+Sylvester-1000-5/fileA.txt 1;Sylvester-1000-5/fileB.txt 2;
+Sylvester-1000-5/fileB.txt 2;Sylvester-1000-5/fileD.txt 3;
+Sylvester-1000-5/fileC.txt 2;Sylvester-1000-5/fileE.txt 3;
+Sylvester-1000-5/fileD.txt 3;Sylvester-1000-5/fileF.txt 4;
+Sylvester-1000-5/fileE.txt 3;Sylvester-1000-5/fileH.txt 4;
+Sylvester-1000-5/fileF.txt 4;Sylvester-1000-5/fileG.txt 5;
+Sylvester-1000-5/fileG.txt 5;Sylvester-1000-5/fileI.txt 6;
+Sylvester-1000-5/fileH.txt 4;Sylvester-1000-5/fileI.txt 6;

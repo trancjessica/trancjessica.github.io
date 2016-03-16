@@ -1,0 +1,20 @@
+VERTICES
+Sylvester-20-68/fileG.txt 5
+Sylvester-20-68/fileF.txt 4
+Sylvester-20-68/fileI.txt 6
+Sylvester-20-68/fileH.txt 4
+Sylvester-20-68/fileE.txt 3
+Sylvester-20-68/fileA.txt 1
+Sylvester-20-68/fileC.txt 2
+Sylvester-20-68/fileD.txt 3
+Sylvester-20-68/fileB.txt 2
+EDGES
+Sylvester-20-68/fileA.txt 1;Sylvester-20-68/fileC.txt 2;
+Sylvester-20-68/fileA.txt 1;Sylvester-20-68/fileB.txt 2;
+Sylvester-20-68/fileB.txt 2;Sylvester-20-68/fileD.txt 3;
+Sylvester-20-68/fileC.txt 2;Sylvester-20-68/fileE.txt 3;
+Sylvester-20-68/fileD.txt 3;Sylvester-20-68/fileF.txt 4;
+Sylvester-20-68/fileE.txt 3;Sylvester-20-68/fileH.txt 4;
+Sylvester-20-68/fileF.txt 4;Sylvester-20-68/fileG.txt 5;
+Sylvester-20-68/fileG.txt 5;Sylvester-20-68/fileI.txt 6;
+Sylvester-20-68/fileH.txt 4;Sylvester-20-68/fileI.txt 6;
