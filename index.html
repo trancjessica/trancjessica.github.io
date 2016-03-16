@@ -21,7 +21,7 @@
  			</div>
 			<div class="col-md-8"> 
 				<ul class="pull-left">
-         			<li><a href="/">HOME</a></li>
+         			<li><a href="/test_file2.html">HOME</a></li>
          			<li><a href="/about.html">ABOUT</a></li>
          		</ul>
         	</div>
@@ -46,34 +46,42 @@
 	 		<option value = "default">Bijection </option>
 	 		<option value = "Sylvester">Sylvester</option>
 	 		<option value = "AG">AG</option>
-	 		<option value = "The Monster">The Monster</option>
+	 		<!-- <option value = "The Monster">The Monster</option> -->
 	 	</select>
 	 <form>
-</div>
-<br>
-<br>
-</div>
- <div class = "animations">
- 	<div class= "container">
- 		<div class = "row"> 
- 			<div class = "col-md-2">
- 				<h2> Animations</h2>
+	 	<h2> Animations</h2>
         		<div id="option">
     				<input name="updateButton" 
                  	type="button" 
                 	value="New Partition" 
                 	onclick="partition()" />
 				</div>
-				<br>
+<!-- 				<br>
         		<div id="option">
     				<input name="updateButton2" 
                  	type="button" 
                 	value="New Bijection" 
                 	onclick="bijection_new()" />
+				</div> -->
+				<br>
+				<div id="option">
+    				<input name="updateButton2" 
+                 	type="button" 
+                	value="Monster" 
+                	onclick="activate_monster()" />
 				</div>
+		</div>
+	<br>
+	<br>
+</div>
+ <!-- <div class = "animations">
+ 	<div class= "container">
+ 		<div class = "row"> 
+ 			<div class = "col-md-2">
+ 				
  			</div>
  		</div>
- 	</div>
+ 	</div> -->
  </div>
 
 
@@ -99,8 +107,6 @@
 	
 }
 
-
-
 .cheatline{
 	stage : -1;
 	row	: -1;
@@ -114,53 +120,72 @@
 <div id="board"></div>
 <script>
 
-var obj_arr = []
 
-function disable() {
-    document.getElementById("Sizes").disabled=true;
-    document.getElementById("Bijections").disabled=true;
-}
-function enable() {
-    document.getElementById("Sizes").disabled=false;
-    document.getElementById("Bijections").disabled=false;
-}
+
+var obj_arr = []
 
 function bijection_new()
 {
+	d3.selectAll("svg").remove();
+	obj_arr = [];
 	window.location.reload();
+}
+
+function activate_monster()
+{
+
+	
+	d3.selectAll("svg").remove(); 
+	obj_arr = []
+
+	decidePartition("The Monster", -1); 
 }
 function partition()
 {
-	enable(); 
+	
 	var size_input = document.getElementById("Sizes").value;
 	var bijection_input = document.getElementById("Bijections").value;
 	
-	d3.select("svg").remove()
-	obj_arr = []
-	clean_up(); 
-	//d3.select("svg").attr("fill", "#fffff")
-	
-	console.log("Partition function", size_input, bijection_input)
-	if(bijection_input != "The Monster")
-		decidePartition(bijection_input, size_input)
-	
-	if(size_input != "default" && bijection_input != "default")
-	{
-		console.log("In if statement")
-		disable(); 
-	}
-	
-	//window.location.reload();
-	//console.log("In partition function!")
 
+	if(size_input == "default" && bijection_input != "default")
+		window.alert("Please select a size in the drop down menu!")
+
+	if(bijection_input == "default" && size_input != "default")
+		window.alert("Please select a bijection in the drop down menu!")
+
+	if(bijection_input == "default" && size_input == "default")
+		window.alert("Please select a bijection and size in the drop down menu!")
+
+	d3.selectAll("svg").remove()
+	obj_arr = []
+	
+	
+	decidePartition(bijection_input, size_input)
+	
 	
 
 }
 function decidePartition(bijection_input, size_input)
 {
-	//
+	console.log("Entered decidePartition")
+	console.log(bijection_input)
+	if(bijection_input == "The Monster")
+	{
+		console.log("Decide Monster")
+		d3.selectAll("svg").remove(); 
+		obj_arr = []
 
-	if(bijection_input == "Sylvester")
+		d3.text("/AG_dot/graph.txt", function(text)
+		{
+			var file_name = "/AG_dot"
+			var value = "AG_dot_monster"
+			//window.alert(d3.csv.parseRows(text)[0])
+			save_order_data(file_name, value, text, obj_arr)
+		});
+
+		
+	}
+	else if(bijection_input == "Sylvester")
 	{
 
 		
@@ -168,16 +193,18 @@ function decidePartition(bijection_input, size_input)
 		{
 
 			var random_value = Math.floor((Math.random() * 100) + 1)
-			console.log(random_value)
+			//console.log(random_value)
+
 			var value = "sylvester_dot";
 			var file_name = "/Sylvester-20-" + random_value
-			console.log(file_name + "/graph.txt")
+			//console.log(file_name + "/graph.txt")
 
 			d3.text(file_name + "/graph.txt", function(text)
 			{
 				//console.log("Hello")
-				console.log(d3.csv.parseRows(text)[0])
+				//console.log(d3.csv.parseRows(text)[0])
 				//window.alert(d3.csv.parseRows(text)[0])
+
 				save_order_data(file_name, value, text, obj_arr)
 			});
 
@@ -189,7 +216,7 @@ function decidePartition(bijection_input, size_input)
 			var file_name = "/Sylvester-100-" + random_value
 			var value = "sylvester_dot";
 			d3.text(file_name  + "/graph.txt", function(text){
-				console.log(d3.csv.parseRows(text)[0])
+				//console.log(d3.csv.parseRows(text)[0])
 					//window.alert(d3.csv.parseRows(text)[0])
 				save_order_data(file_name, value, text, obj_arr)
 				});
@@ -197,7 +224,7 @@ function decidePartition(bijection_input, size_input)
 		else if(size_input == "size_1000")
 		{
 			var random_value = Math.floor((Math.random() * 100) + 1)
-			console.log(random_value)
+			//console.log(random_value)
 			var file_name = "/Sylvester-1000-" + random_value
 			var value = "sylvester_line";
 			d3.text(file_name + "/graph.txt", function(text){
@@ -209,7 +236,7 @@ function decidePartition(bijection_input, size_input)
 		else if(size_input == "size_10000")
 		{
 			var random_value = Math.floor((Math.random() * 100) + 1)
-			console.log(random_value)
+			//console.log(random_value)
 			var file_name = "/Sylvester-10000-" + random_value
 			var value = "sylvester_line";
 			d3.text(file_name + "/graph.txt", function(text){
@@ -232,34 +259,22 @@ function decidePartition(bijection_input, size_input)
 		// }
 		
 	}
-	else if(bijection_input == "The Monster")
-	{
-		d3.select("svg").remove()
-		d3.text("/AG_dot/graph.txt", function(text)
-		{
-			var file_name = "/AG_dot"
-			var value = "AG_dot_monster"
-			//window.alert(d3.csv.parseRows(text)[0])
-			save_order_data(file_name, value, text, obj_arr)
-		});
 
-		
-	}
 	else if(bijection_input == "AG")
 	{
 		if(size_input == "size_20")
 		{
 
 			var random_value = Math.floor((Math.random() * 100) + 1)
-			console.log(random_value)
+			//console.log(random_value)
 			var value = "AG_dot";
 			var file_name = "/AG-20-" + random_value
-			console.log(file_name + "/graph.txt")
+			//console.log(file_name + "/graph.txt")
 
 			d3.text(file_name + "/graph.txt", function(text)
 			{
 				
-				console.log(d3.csv.parseRows(text)[0])
+				//console.log(d3.csv.parseRows(text)[0])
 				//window.alert(d3.csv.parseRows(text)[0])
 				save_order_data(file_name, value, text, obj_arr)
 			});
@@ -272,7 +287,7 @@ function decidePartition(bijection_input, size_input)
 			var file_name = "/AG-100-" + random_value
 			var value = "AG_dot";
 			d3.text(file_name  + "/graph.txt", function(text){
-				console.log(d3.csv.parseRows(text)[0])
+				//console.log(d3.csv.parseRows(text)[0])
 					//window.alert(d3.csv.parseRows(text)[0])
 				save_order_data(file_name, value, text, obj_arr)
 				});
@@ -280,7 +295,7 @@ function decidePartition(bijection_input, size_input)
 		else if(size_input == "size_1000")
 		{
 			var random_value = Math.floor((Math.random() * 100) + 1)
-			console.log(random_value)
+			//console.log(random_value)
 			var file_name = "/AG-1000-" + random_value
 			var value = "AG_line";
 			d3.text(file_name + "/graph.txt", function(text){
@@ -292,7 +307,7 @@ function decidePartition(bijection_input, size_input)
 		else if(size_input == "size_10000")
 		{
 			var random_value = Math.floor((Math.random() * 100) + 1)
-			console.log(random_value)
+			//console.log(random_value)
 			var file_name = "/AG-10000-" + random_value
 			var value = "AG_line";
 			d3.text(file_name + "/graph.txt", function(text){
@@ -323,51 +338,29 @@ function decidePartition(bijection_input, size_input)
 
 document.getElementById("Sizes").onchange = function()
 {
-	//svg.selectAll("*").remove()
-	d3.select("svg").remove()
+	
+	//d3.selectAll("svg").remove()
 	var size_input = document.getElementById("Sizes").value;
 
-	obj_arr = []; 
-	clean_up(); 
+	//obj_arr = []; 
+	//clean_up(); 
 
-	//console.log("Should be empty", obj_arr)
 
 	document.getElementById("Bijections").onchange = function(){
 		var bijection_input = document.getElementById("Bijections").value;
-			d3.select("svg").remove()
-			disable(); 
-		decidePartition(bijection_input, size_input);
+
 	}
 }
 
 
 document.getElementById("Bijections").onchange = function()
 {
-	//svg.selectAll("*").remove()
-	d3.select("svg").remove()
-	
-	obj_arr = []; 
-	clean_up(); 
 
-	//console.log("Should be empty", obj_arr)
+	
 	var bijection_input = document.getElementById("Bijections").value;
 
-	if(bijection_input != "The Monster")
-	{
-		document.getElementById("Sizes").onchange = function(){
-		var size_input = document.getElementById("Sizes").value;
-			d3.select("svg").remove()
-			disable();
-		decidePartition(bijection_input, size_input);
-		console.log(size_input)
-		
-		}
-	}
-	else
-	{
-		disable(); 
-		d3.select("svg").remove()
-		decidePartition(bijection_input, -1);
+	document.getElementById("Sizes").onchange = function(){
+	var size_input = document.getElementById("Sizes").value;
 	}
 
 }
@@ -417,6 +410,7 @@ function save_order_data(file_name, value, text, obj_arr){
 	//console.log(stop_point)
 	for(var index = 1; index < stop_point; index++)
 	{
+		console.log("The index value is [in the save_data function] ", index)
 		//console.log("In for loop")
 		if(d3.csv.parseRows(text)[index].length > 0)
 		{
@@ -481,7 +475,9 @@ var index_count = 0;
 
 function assign_rows_cols(file_name, object, number_of_files,value, obj_arr){
 
-	if(index_count > number_of_files)
+	
+
+	//if(index_count > number_of_files)
 		index_count = 0
 
 	d3.text(file_name + "/" + object.name + ".txt", function(text)
@@ -489,37 +485,34 @@ function assign_rows_cols(file_name, object, number_of_files,value, obj_arr){
 		save_data(text, object)
 		obj_arr.push(object)
 
-		if(index_count < number_of_files)
-			index_count ++
+		index_count ++
 
-		console.log("Index", index_count)
-		console.log("Number of file", number_of_files)
-		console.log("Value", value)
-
+	
 
 		if(index_count == number_of_files && value == "sylvester_dot"){
-			console.log(value)
-			//geometry_2(obj_arr);
+			//console.log("Number of file", number_of_files)
+			
 			bijection_syl_dot();
 		}
 		else if(index_count == number_of_files && value == "sylvester_line"){
-			console.log(value)
-			//geometry_2(obj_arr);
+			//console.log("Number of file", number_of_files)
+			
 			bijection_syl_line();
 		}
 		else if(index_count == number_of_files && value == "AG_dot"){
-			console.log(value)
-			//geometry_2(obj_arr);
+			//console.log("Number of file", number_of_files)
+	
 			bijection_ag_dot();
 		}
 		else if(index_count == number_of_files && value == "AG_dot_monster"){
-			console.log(value)
-			//geometry_2(obj_arr);
+			//console.log("Entering monster bijection")
+			//console.log("Number of file", number_of_files)
+
 			bijection_ag_dot();
 		}
 		else if(index_count == number_of_files && value == "AG_line"){
-			console.log(value)
-			//geometry_2(obj_arr);
+			//console.log("Number of file", number_of_files)
+			
 			bijection_ag_line();
 		}
 	
@@ -566,17 +559,6 @@ function save_data(text, object){
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 	
 	function find_max_stage_num(obj_arr){
 		//console.log("In find max stage num", obj_arr.length)
@@ -600,15 +582,15 @@ function save_data(text, object){
 	
 	function find_index_by_name(obj_arr,name){
 
-		console.log("The name is: ", name)
+		//console.log("The name is: ", name)
 
 		for(var i=0;i<obj_arr.length;i++){
 			if(name==obj_arr[i].name){
-				console.log("find index by name", obj_arr[i].name)
+				//console.log("find index by name", obj_arr[i].name)
 				return i;
 			}
 		}
-		console.log("find index by name", -1)
+		
 		return -1;
 	}
 	/*
@@ -695,6 +677,125 @@ function save_data(text, object){
 	
 	
 	
+
+
+
+
+
+
+
+
+
+
+	
+	function find_max_stage_num(obj_arr){
+		var max_stage_num = 0;
+		for(var i = 0; i< obj_arr.length;i++){
+			if(obj_arr[i].stage>max_stage_num){max_stage_num=obj_arr[i].stage;}
+		}
+		return max_stage_num;
+	}
+	
+	
+	
+	function check_duplicate(arr,num){
+		for(var i = 0; i<arr.length;i++){
+			if(arr[i]==num)return true;
+		}
+		return false;
+	}
+	
+	function find_index_by_name(obj_arr,name){
+		for(var i=0;i<obj_arr.length;i++){
+			if(name==obj_arr[i].name){
+				return i;
+			}
+		}
+		return -1;
+	}
+	/*
+	function parse_stage(obj_arr,max_stage_num){
+		var stage = new Array(max_stage_num);
+		for(var i = 0; i< obj_arr.length;i++){
+			var stage_num = obj_arr[i].stage;
+			stage[stage_num-1].push(i);
+		}
+		return stage;
+	}*/
+	function parse_stage(obj_arr,max_stage_num){
+		var stage = new Array(max_stage_num);
+		for(var i=0;i<stage.length;i++){stage[i]=new Array();}
+		//finding whatever partition that is stage 1 and push to the first array in the stage.
+		for(var i = 0; i< obj_arr.length;i++){
+			var stage_num = obj_arr[i].stage;
+			if(stage_num==1){
+				stage[0].push(i);
+			}
+		}
+		
+		//'.' is the separater, "," means duplicate, it will be the same partition of the previous one, negative numbers are place holder, ~x where x is the index that we are holding for
+		var current_stage_num = 1;
+		while(current_stage_num<max_stage_num){
+			for(var j = 0; j< stage[current_stage_num-1].length;j++){
+				var index = stage[current_stage_num-1][j];
+				//console.log(index);
+				//a placeholder, we check if this is right stage we are holding for, if it is check duplicate and push to the next stage array, if not push the placeholder to next stage array
+				if(index == "."||index==","){continue;}
+				if(index < 0){
+					var origin_index = ~index;
+					if(obj_arr[origin_index].stage==current_stage_num+1){
+						if(check_duplicate(stage[current_stage_num],origin_index)==false){
+							stage[current_stage_num].push(origin_index);
+							stage[current_stage_num].push(".");
+						}
+						else {
+							stage[current_stage_num].push(",");
+							stage[current_stage_num].push(".");
+						}
+					}
+					else{
+						stage[current_stage_num].push(index);
+						stage[current_stage_num].push(".");
+					}
+					
+				}
+				//index greater than zero, we iterate the next array, if the next element is indeed the next stage, we check duplicate and push to next stage, if not we create a palceholder for the stage it should be in by bitwise NOT
+				else{
+					for(var k = 0;k< (obj_arr[index]).next.length;k++){
+						var next_index = find_index_by_name(obj_arr,obj_arr[index].next[k]);
+						//indeed belongs to next stage
+						if(obj_arr[next_index].stage == current_stage_num+1){
+							if(check_duplicate(stage[current_stage_num],next_index)==false){
+								stage[current_stage_num].push(next_index);
+								
+							}
+						
+							else {
+								stage[current_stage_num].push(",");
+							}
+							
+						}
+						//when it does not belong to next stage, we push a placeholder
+						else{
+							stage[current_stage_num].push(~next_index);
+						}
+					}
+					stage[current_stage_num].push(".");
+				}
+				
+
+			
+			}
+			//console.log(stage);
+			current_stage_num++;
+		}
+		return stage;
+	
+	
+	}
+	
+	
+	
 	
 	
 	function find_max_row_length(obj_arr){
@@ -732,18 +833,22 @@ function save_data(text, object){
 	
 	var w = 800,
 		h = 800;
-	var topleft_x = 200;
+	var topleft_x = 400;
 	var topleft_y = 250;
 	var blue = "#00008b";
+	var purple = "#800080";
+	var green = "#4CA54C";
 	var white = "#ffffff";
 	var red = "#dc143c";
 	var black = "#000000";
 	var draw_dur = 500;
-	var max_stage_num,stage,fixed_arrow_box_col,par_col,par_row,max_stage_length,par_dist,rows,cols,sz,r,shrink_ratio,true_raduis,boxes,box,svg,widthofstroke;
-	
+	var max_stage_num,stage,fixed_arrow_box_col,par_col,par_row,max_stage_length,par_dist,rows,cols,sz,r,shrink_ratio,true_raduis,boxes,box,svg,widthofstroke,color_counter;
+	var color_arr = [];
+	color_arr.push(blue);
+	color_arr.push(purple);
+	color_arr.push(green);
 	function assign_value(obj_arr){
-		//console.log("In assign value")
-
+		color_counter=0;
 		max_stage_num = find_max_stage_num(obj_arr);
 	//an array that each element is an array with each element is the index of the obj_arr
 		stage = parse_stage(obj_arr,max_stage_num);
@@ -1145,6 +1250,7 @@ function save_data(text, object){
 	}
 	
 	function cut(src_index,dest_index_1,dest_index_2,init_delay){
+		
 		var new_stage = obj_arr[dest_index_1].stage;
 		var old_stage = obj_arr[src_index].stage;
 		var src_top_left_row = obj_arr[src_index].absolute_row;
@@ -1175,8 +1281,9 @@ function save_data(text, object){
 			var dest_abs_row = dest_2_top_left_row+re_row-1;
 			var dest_abs_col_min = dest_2_top_left_col+re_col_min-1;
 			var dest_abs_col_max = dest_2_top_left_col+re_col_max-1;
-			move_one_line_backward(old_stage,src_abs_row,src_abs_col,new_stage,dest_abs_row,dest_abs_col_min,dest_abs_col_max,init_delay,false,false,true,blue);
+			move_one_line_backward(old_stage,src_abs_row,src_abs_col,new_stage,dest_abs_row,dest_abs_col_min,dest_abs_col_max,init_delay,false,false,true,color_arr[color_counter]);
 		}
+		color_counter++;
 		return temp;
 	}
 	
@@ -1207,7 +1314,7 @@ function save_data(text, object){
 		}
 	}
 	//multiplyer=2 means row*2, addtion => row+addtion as mapping,no addtion pass in 0 and no multiplyer pass in 1
-	function shift(src_index,dest_index,multiplyer,addition,init_delay){
+	function shift(src_index,dest_index,multiplyer,addition,init_delay,color){
 		var new_stage = obj_arr[dest_index].stage;
 		var old_stage = obj_arr[src_index].stage;
 		var src_top_left_row = obj_arr[src_index].absolute_row;
@@ -1216,6 +1323,7 @@ function save_data(text, object){
 		var dest_top_left_col = obj_arr[dest_index].absolute_col;
 		var temp;
 		for(var i = 0 ; i<obj_arr[src_index].rows.length;i=i+2){
+			if(i>=obj_arr[dest_index].rows.length){break;}
 			var src_re_row = obj_arr[src_index].rows[i];
 			var dest_re_row = src_re_row*multiplyer+addition;
 			var dest_re_col_min,dest_re_col_max;
@@ -1232,8 +1340,31 @@ function save_data(text, object){
 			var dest_abs_row = dest_top_left_row+dest_re_row-1;
 			var dest_abs_col_min = dest_top_left_col+dest_re_col_min-1;
 			var dest_abs_col_max = dest_top_left_col+dest_re_col_max-1;
-			temp = move_one_line_forward(old_stage,src_abs_row,new_stage,dest_abs_row,dest_abs_col_min,dest_abs_col_max,false,init_delay);
+			temp = move_one_line_forward(old_stage,src_abs_row,new_stage,dest_abs_row,dest_abs_col_min,dest_abs_col_max,false,init_delay,color);
 		}	
+		return temp;
+	}
+	
+	function shift_backward(src_index,dest_index,init_delay,color){
+		var new_stage = obj_arr[dest_index].stage;
+		var old_stage = obj_arr[src_index].stage;
+		var src_top_left_row = obj_arr[src_index].absolute_row;
+		var src_top_left_col = obj_arr[src_index].absolute_col;
+		var dest_top_left_row = obj_arr[dest_index].absolute_row;
+		var dest_top_left_col = obj_arr[dest_index].absolute_col;
+		var temp;
+		for(var i = 0 ; i<obj_arr[dest_index].rows.length;i=i+2){
+			var re_row = obj_arr[dest_index].rows[i];
+			var re_col_min = obj_arr[dest_index].cols[i];
+			var re_col_max = obj_arr[dest_index].cols[i+1];
+			var src_abs_row = src_top_left_row+re_row-1;
+			var src_abs_col = src_top_left_col+re_col_min-1;
+			var dest_abs_row = dest_top_left_row+re_row-1;
+			var dest_abs_col_min = dest_top_left_col+re_col_min-1;
+			var dest_abs_col_max = dest_top_left_col+re_col_max-1;
+			//console.log(old_stage,src_abs_row,src_abs_col,new_stage,dest_abs_row,dest_abs_col_min,dest_abs_col_max);
+			temp = move_one_line_backward(old_stage,src_abs_row,src_abs_col,new_stage,dest_abs_row,dest_abs_col_min,dest_abs_col_max,init_delay,false,false,false,color);
+		}
 		return temp;
 	}
 	
@@ -1269,6 +1400,18 @@ function save_data(text, object){
 			move_one_line_forward(old_stage_2,src_abs_row,new_stage,dest_abs_row,dest_abs_col_min,dest_abs_col_max,true,init_delay);
 		}
 		return temp;
+	}
+	
+	function unif_color(src_index,color){
+		var old_stage = obj_arr[src_index].stage;
+		var src_top_left_row = obj_arr[src_index].absolute_row;
+		//var src_top_left_col = obj_arr[src_index].absolute_col;
+		for(var i = 0 ; i<obj_arr[src_index].rows.length;i=i+2){
+			var src_re_row = obj_arr[src_index].rows[i];
+			var src_abs_row = src_top_left_row+src_re_row-1;
+			svg.select("[stage='"+old_stage+"'][row='"+src_abs_row+"']").attr("stroke",color);
+		
+		}
 	}
 	
 	function draw_initial_line(){
@@ -1327,8 +1470,46 @@ function save_data(text, object){
 		for(var i = 0; i< stage.length;i++){	
 			if(i<stage.length-1){temp = draw_line(i+1,temp,black);}
 		}
-
-		clean_up(); 
+	}
+	
+	function bijection_ag_line(){
+		assign_value(obj_arr)
+		update_position()
+		create_lines()
+		var temp = draw_initial_line();
+		setTimeout(cut,temp,stage[0][0],stage[1][0],stage[1][1],0);
+		temp = temp + transitiont_dur;
+		setTimeout(shift,temp,stage[1][0],stage[2][0],1,0,0);
+		setTimeout(cut,temp,stage[1][1],stage[2][2],stage[2][3],0);
+		temp = temp + transitiont_dur;
+		setTimeout(cut,temp,stage[2][0],stage[3][0],stage[3][1],0);
+		setTimeout(shift,temp,stage[2][2],stage[3][3],1,0,0);
+		setTimeout(shift_backward,temp,stage[2][3],stage[3][5],0,color_arr[1]);
+		temp = temp + transitiont_dur;
+		setTimeout(shift,temp,stage[3][0],stage[4][0],2,-1,0);
+		setTimeout(shift,temp,stage[3][1],stage[4][2],2,-1,0);
+		setTimeout(shift,temp,stage[3][3],stage[4][4],1,0,0);
+		setTimeout(shift,temp,stage[3][5],stage[4][6],1,0,0);
+		temp = temp + transitiont_dur;
+		setTimeout(shift,temp,stage[4][0],stage[5][0],1,0,0);
+		setTimeout(shift,temp,stage[4][2],stage[5][0],1,1,0);
+		setTimeout(reflect_partition,temp,stage[4][4],stage[5][4],false,0);
+		setTimeout(reflect_partition,temp,stage[4][6],stage[5][6],false,0);
+		temp = temp + transitiont_dur;
+		setTimeout(shift,temp,stage[5][4],stage[6][2],2,-1,0);
+		setTimeout(shift,temp,stage[5][6],stage[6][4],2,-1,0);
+		temp = temp + transitiont_dur;
+		setTimeout(shift,temp,stage[6][2],stage[7][2],1,0,0);
+		setTimeout(shift,temp,stage[6][4],stage[7][2],1,1,0);
+		temp = temp + transitiont_dur;
+		setTimeout(unif_color,temp,stage[5][0],red);
+		setTimeout(unif_color,temp,stage[7][2],blue);
+		setTimeout(shift,temp,stage[7][2],stage[8][0],1,0,0);
+		setTimeout(shift,temp,stage[5][0],stage[8][0],1,0,0);
+		temp = temp + transitiont_dur;
+		for(var i = 0; i< stage.length;i++){	
+			if(i<stage.length-1){temp = draw_line(i+1,temp,black);}
+		}
 	}
 	/*
 	function prep_shred(start_index,end_index_1,end_index_2,init_delay){
@@ -1439,10 +1620,12 @@ function save_data(text, object){
 		var start_top_left_col = obj_arr[start_index].absolute_col;
 		var end_2_top_row,end_2_down_row;
 		
-		
+		var new_color;
 		if(end_index_2!=-1){
 			end_2_top_row = obj_arr[end_index_2].absolute_row;
 			end_2_down_row = end_2_top_row + par_row;
+			new_color = color_arr[color_counter];
+			color_counter++;
 		}
 		 
 		
@@ -1487,7 +1670,7 @@ function save_data(text, object){
 				
 				if(end_index_2!=-1){
 					if(end_abs_row>=end_2_top_row&&end_abs_row<end_2_down_row){
-						move_one_dot(start_abs_row,start_abs_col,end_abs_row,end_abs_col,del,blue);
+						move_one_dot(start_abs_row,start_abs_col,end_abs_row,end_abs_col,del,new_color);
 						
 					}
 					else{
@@ -1646,6 +1829,7 @@ function save_data(text, object){
 	//bijection2();
 	
 	function bijection_syl_dot(){
+		
 		//var temp = do_stuff_2(obj_arr);
 		var temp;
 		assign_value(obj_arr);
@@ -1696,18 +1880,13 @@ function save_data(text, object){
 		for(var i = 0; i< stage.length;i++){	
 			if(i<stage.length-1){temp = draw_line(i+1,temp,black);}
 		}
-
-		//clean_up(); 
 		return temp;
-
-
 	}
-
+	
 	function bijection_ag_dot(){
+
+
 		var temp;
-
-		console.log("In bijection_ag_dot")
-
 		assign_value(obj_arr);
 		update_position();
 		create_lines();
@@ -1734,61 +1913,16 @@ function save_data(text, object){
 		for(var i = 0; i< stage.length;i++){	
 			if(i<stage.length-1){temp = draw_line(i+1,temp,black);}
 		}
-
-		//clean_up(); 
 		return temp;
 	}
-
-	function bijection_ag_line(){
-		assign_value(obj_arr)
-		update_position()
-		create_lines()
-		var temp = draw_initial_line();
-		setTimeout(cut,temp,stage[0][0],stage[1][0],stage[1][1],0);
-		temp = temp + transitiont_dur;
-		setTimeout(shift,temp,stage[1][0],stage[2][0],1,0,0);
-		setTimeout(cut,temp,stage[1][1],stage[2][2],stage[2][3],0);
-		temp = temp + transitiont_dur;
-		setTimeout(cut,temp,stage[2][0],stage[3][0],stage[3][1],0);
-		setTimeout(shift,temp,stage[2][2],stage[3][3],1,0,0);
-		setTimeout(shift_backward,temp,stage[2][3],stage[3][5],0,color_arr[1]);
-		temp = temp + transitiont_dur;
-		setTimeout(shift,temp,stage[3][0],stage[4][0],2,-1,0);
-		setTimeout(shift,temp,stage[3][1],stage[4][2],2,-1,0);
-		setTimeout(shift,temp,stage[3][3],stage[4][4],1,0,0);
-		setTimeout(shift,temp,stage[3][5],stage[4][6],1,0,0);
-		temp = temp + transitiont_dur;
-		setTimeout(shift,temp,stage[4][0],stage[5][0],1,0,0);
-		setTimeout(shift,temp,stage[4][2],stage[5][0],1,1,0);
-		setTimeout(reflect_partition,temp,stage[4][4],stage[5][4],false,0);
-		setTimeout(reflect_partition,temp,stage[4][6],stage[5][6],false,0);
-		temp = temp + transitiont_dur;
-		setTimeout(shift,temp,stage[5][4],stage[6][2],2,-1,0);
-		setTimeout(shift,temp,stage[5][6],stage[6][4],2,-1,0);
-		temp = temp + transitiont_dur;
-		setTimeout(shift,temp,stage[6][2],stage[7][2],1,0,0);
-		setTimeout(shift,temp,stage[6][4],stage[7][2],1,1,0);
-		temp = temp + transitiont_dur;
-		setTimeout(unif_color,temp,stage[5][0],red);
-		setTimeout(unif_color,temp,stage[7][2],blue);
-		setTimeout(shift,temp,stage[7][2],stage[8][0],1,0,0);
-		setTimeout(shift,temp,stage[5][0],stage[8][0],1,0,0);
-		temp = temp + transitiont_dur;
-		for(var i = 0; i< stage.length;i++){	
-			if(i<stage.length-1){temp = draw_line(i+1,temp,black);}
-		}
-		//clean_up(); 
-	}
+	
 	
 	function clean_up(){
-
-		console.log("In clean up function")
-		if (typeof(svg)==='undefined'){return;}
-
 		svg.selectAll("circle").remove();
 		svg.selectAll("line").remove();
 		obj_arr = [];
 	}
+
 
 
 </script>
