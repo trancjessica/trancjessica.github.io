@@ -148,13 +148,13 @@ function partition()
 	
 
 	if(size_input == "default" && bijection_input != "default")
-		window.alert("Please select a size from the drop down menu!")
+		window.alert("Please select a size in the drop down menu!")
 
 	if(bijection_input == "default" && size_input != "default")
-		window.alert("Please select a bijection from the drop down menu!")
+		window.alert("Please select a bijection in the drop down menu!")
 
 	if(bijection_input == "default" && size_input == "default")
-		window.alert("Please select a bijection and size from the drop down menus!")
+		window.alert("Please select a bijection and size in the drop down menu!")
 
 	d3.selectAll("svg").remove()
 	obj_arr = []
@@ -197,7 +197,7 @@ function decidePartition(bijection_input, size_input)
 
 			var value = "sylvester_dot";
 			var file_name = "/Sylvester-20-" + random_value
-			//console.log(file_name + "/graph.txt")
+			console.log(file_name + "/graph.txt")
 
 			d3.text(file_name + "/graph.txt", function(text)
 			{
@@ -405,7 +405,12 @@ function save_order_data(file_name, value, text, obj_arr){
 
 	}
 
+	console.log("Stop point ", stop_point)
+
+
 	number_of_files = d3.csv.parseRows(text).length - (d3.csv.parseRows(text).length - stop_point) - 1
+
+	console.log("Number of files ", number_of_files)
 
 	//console.log(stop_point)
 	for(var index = 1; index < stop_point; index++)
@@ -1002,6 +1007,7 @@ function save_data(text, object){
 	
 	
 	function create_lines(){
+		console.log("Created lines")
 		var line_obj = [];
 		for(var i=1;i<stage.length;i++){
 			/*
@@ -1441,31 +1447,54 @@ function save_data(text, object){
 	
 	}
 	
-	function bijection_syl_line(){
+	// function bijection_syl_line(){
+	// 	assign_value(obj_arr);
+	// 	update_position();
+	// 	create_lines();
+	// 	var temp = draw_initial_line();
+	// 	//console.log(temp);
+	// 	setTimeout(cut,temp,stage[0][0],stage[1][0],stage[1][1],0);
+	// 	temp = temp + transitiont_dur;
+	// 	//console.log(temp);
+	// 	setTimeout(shift,temp,stage[1][0],stage[2][0],1,0,0);
+	// 	setTimeout(shift,temp,stage[1][1],stage[2][2],1,-1,0);
+	// 	temp = temp + transitiont_dur;		
+	// 	setTimeout(shift,temp,stage[2][0],stage[3][0],1,0,0);
+	// 	setTimeout(shift,temp,stage[2][2],stage[3][2],2,0,0);
+	// 	temp = temp + transitiont_dur;
+	// 	setTimeout(reflect_partition,temp,stage[3][0],stage[4][0],false,0);
+	// 	setTimeout(reflect_partition,temp,stage[3][2],stage[4][2],true,0);
+	// 	temp = temp + transitiont_dur;
+	// 	setTimeout( shift,temp,stage[4][0],stage[5][0],2,0,0);
+	// 	temp = temp + transitiont_dur;		
+	// 	setTimeout( shift,temp,stage[5][0],stage[6][0],1,-1,0);
+	// 	temp = temp + transitiont_dur;
+	// 	setTimeout(reflect_partition,temp,stage[6][0],stage[7][0],true,0);
+	// 	temp = temp + transitiont_dur;
+	// 	setTimeout(merge_lines,temp,stage[7][0],stage[4][2],stage[8][0],0);
+	// 	temp = temp + transitiont_dur;
+	// 	for(var i = 0; i< stage.length;i++){	
+	// 		if(i<stage.length-1){temp = draw_line(i+1,temp,black);}
+	// 	}
+	// }
+
+		function bijection_syl_line(){
 		assign_value(obj_arr);
 		update_position();
 		create_lines();
 		var temp = draw_initial_line();
-		//console.log(temp);
 		setTimeout(cut,temp,stage[0][0],stage[1][0],stage[1][1],0);
 		temp = temp + transitiont_dur;
-		//console.log(temp);
 		setTimeout(shift,temp,stage[1][0],stage[2][0],1,0,0);
-		setTimeout(shift,temp,stage[1][1],stage[2][2],1,-1,0);
-		temp = temp + transitiont_dur;		
+		setTimeout(shift,temp,stage[1][1],stage[2][2],1,0,0);
+		temp = temp + transitiont_dur;
 		setTimeout(shift,temp,stage[2][0],stage[3][0],1,0,0);
-		setTimeout(shift,temp,stage[2][2],stage[3][2],2,0,0);
+		setTimeout(reflect_partition,temp,stage[2][2],stage[3][2],false,0);
 		temp = temp + transitiont_dur;
-		setTimeout(reflect_partition,temp,stage[3][0],stage[4][0],false,0);
-		setTimeout(reflect_partition,temp,stage[3][2],stage[4][2],true,0);
+		setTimeout(shift,temp,stage[3][2],stage[4][2],1,1,0);
 		temp = temp + transitiont_dur;
-		setTimeout( shift,temp,stage[4][0],stage[5][0],2,0,0);
-		temp = temp + transitiont_dur;		
-		setTimeout( shift,temp,stage[5][0],stage[6][0],1,-1,0);
-		temp = temp + transitiont_dur;
-		setTimeout(reflect_partition,temp,stage[6][0],stage[7][0],true,0);
-		temp = temp + transitiont_dur;
-		setTimeout(merge_lines,temp,stage[7][0],stage[4][2],stage[8][0],0);
+		setTimeout(shift,temp,stage[3][0],stage[5][0],1,0,0);
+		setTimeout(shift,temp,stage[4][2],stage[5][0],1,0,0);
 		temp = temp + transitiont_dur;
 		for(var i = 0; i< stage.length;i++){	
 			if(i<stage.length-1){temp = draw_line(i+1,temp,black);}
@@ -1828,40 +1857,67 @@ function save_data(text, object){
 	//get_data_set(2);
 	//bijection2();
 	
-	function bijection_syl_dot(){
+	// function bijection_syl_dot(){
 		
-		//var temp = do_stuff_2(obj_arr);
+	// 	//var temp = do_stuff_2(obj_arr);
+	// 	var temp;
+	// 	assign_value(obj_arr);
+	// 	update_position();
+		
+	// 	create_lines();
+		
+	// 	if(r<0.25){
+	// 	temp = draw_initial_line();
+		
+	// 	setTimeout(cut,temp,stage[0][0],stage[1][0],stage[1][1],0);
+	// 	temp = temp + transitiont_dur;
+		
+	// 	setTimeout(shift,temp,stage[1][0],stage[2][0],1,0,0);
+	// 	setTimeout(shift,temp,stage[1][1],stage[2][2],1,-1,0);
+	// 	temp = temp + transitiont_dur;		
+	// 	setTimeout(shift,temp,stage[2][0],stage[3][0],1,0,0);
+	// 	setTimeout(shift,temp,stage[2][2],stage[3][2],2,0,0);
+	// 	temp = temp + transitiont_dur;
+	// 	setTimeout(reflect_partition,temp,stage[3][0],stage[4][0],false,0);
+	// 	setTimeout(reflect_partition,temp,stage[3][2],stage[4][2],true,0);
+	// 	temp = temp + transitiont_dur;
+	// 	setTimeout( shift,temp,stage[4][0],stage[5][0],2,0,0);
+	// 	temp = temp + transitiont_dur;		
+	// 	setTimeout( shift,temp,stage[5][0],stage[6][0],1,-1,0);
+	// 	temp = temp + transitiont_dur;
+	// 	setTimeout(reflect_partition,temp,stage[6][0],stage[7][0],true,0);
+	// 	temp = temp + transitiont_dur;
+	// 	setTimeout(merge_lines,temp,stage[7][0],stage[4][2],stage[8][0],0);
+	// 	temp = temp + transitiont_dur;
+	// 	}
+	// 	else{
+	// 	allocate_needed(obj_arr);
+	// 	temp = draw_starter_stage();
+	// 	temp = shred(stage[0][0],stage[1][0],stage[1][1],temp);
+	// 	one_to_one(stage[1][0],stage[2][0],temp);
+	// 	temp = one_to_one(stage[1][1],stage[2][2],temp);
+	// 	one_to_one(stage[2][0],stage[3][0],temp);
+	// 	temp = one_to_one(stage[2][2],stage[3][2],temp);
+	// 	one_to_one(stage[3][0],stage[4][0],temp);
+	// 	temp = one_to_one(stage[3][2],stage[4][2],temp);
+	// 	temp = one_to_one(stage[4][0],stage[5][0],temp);
+	// 	temp = one_to_one(stage[5][0],stage[6][0],temp);
+	// 	temp = one_to_one(stage[6][0],stage[7][0],temp);
+	// 	temp = merge(stage[7][0],stage[4][2],stage[8][0],temp);
+	// 	//}
+		
+	// 	for(var i = 0; i< stage.length;i++){	
+	// 		if(i<stage.length-1){temp = draw_line(i+1,temp,black);}
+	// 	}
+	// 	return temp;
+	// }
+
+		function bijection_syl_dot(){
 		var temp;
 		assign_value(obj_arr);
 		update_position();
 		
 		create_lines();
-		/*
-		if(r<0.25){
-		temp = draw_initial_line();
-		
-		setTimeout(cut,temp,stage[0][0],stage[1][0],stage[1][1],0);
-		temp = temp + transitiont_dur;
-		
-		setTimeout(shift,temp,stage[1][0],stage[2][0],1,0,0);
-		setTimeout(shift,temp,stage[1][1],stage[2][2],1,-1,0);
-		temp = temp + transitiont_dur;		
-		setTimeout(shift,temp,stage[2][0],stage[3][0],1,0,0);
-		setTimeout(shift,temp,stage[2][2],stage[3][2],2,0,0);
-		temp = temp + transitiont_dur;
-		setTimeout(reflect_partition,temp,stage[3][0],stage[4][0],false,0);
-		setTimeout(reflect_partition,temp,stage[3][2],stage[4][2],true,0);
-		temp = temp + transitiont_dur;
-		setTimeout( shift,temp,stage[4][0],stage[5][0],2,0,0);
-		temp = temp + transitiont_dur;		
-		setTimeout( shift,temp,stage[5][0],stage[6][0],1,-1,0);
-		temp = temp + transitiont_dur;
-		setTimeout(reflect_partition,temp,stage[6][0],stage[7][0],true,0);
-		temp = temp + transitiont_dur;
-		setTimeout(merge_lines,temp,stage[7][0],stage[4][2],stage[8][0],0);
-		temp = temp + transitiont_dur;
-		}
-		else{*/
 		allocate_needed(obj_arr);
 		temp = draw_starter_stage();
 		temp = shred(stage[0][0],stage[1][0],stage[1][1],temp);
@@ -1869,19 +1925,14 @@ function save_data(text, object){
 		temp = one_to_one(stage[1][1],stage[2][2],temp);
 		one_to_one(stage[2][0],stage[3][0],temp);
 		temp = one_to_one(stage[2][2],stage[3][2],temp);
-		one_to_one(stage[3][0],stage[4][0],temp);
 		temp = one_to_one(stage[3][2],stage[4][2],temp);
-		temp = one_to_one(stage[4][0],stage[5][0],temp);
-		temp = one_to_one(stage[5][0],stage[6][0],temp);
-		temp = one_to_one(stage[6][0],stage[7][0],temp);
-		temp = merge(stage[7][0],stage[4][2],stage[8][0],temp);
-		//}
-		
+		temp = merge(stage[4][2],stage[3][0],stage[5][0],temp);
 		for(var i = 0; i< stage.length;i++){	
 			if(i<stage.length-1){temp = draw_line(i+1,temp,black);}
 		}
 		return temp;
 	}
+	
 	
 	function bijection_ag_dot(){
 
